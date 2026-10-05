@@ -19,17 +19,23 @@ const projects = [
     number: '02',
     type: 'BACKEND / 2026',
     title: 'TASKFLOW API',
-    description: 'A production-minded task service with JWT security, PostgreSQL persistence, validation, and a lightweight connected frontend.',
-    tags: ['Spring Boot', 'PostgreSQL', 'JWT'],
+    description: 'A production-minded task service with JWT security and PostgreSQL, plus smart triage: priorities, overdue tracking, server-side search and filters, and a workload summary API. Backed by integration tests and a connected frontend.',
+    tags: ['Spring Boot', 'PostgreSQL', 'JWT', 'JPA', 'JUnit'],
     tone: 'coral',
+    links: [
+      { label: 'Source code', href: 'https://github.com/Muaaz-Butt/TaskFlow-API' },
+    ],
   },
   {
     number: '03',
     type: 'SOFTWARE DESIGN / 2023',
     title: 'CHESS GAME',
     description: 'A console chess game built with complete game logic, modular state management, inheritance, and polymorphism.',
-    tags: ['Java', 'OOP', 'Game Logic'],
+    tags: ['C++', 'OOP', 'Game Logic'],
     tone: 'blue',
+    links: [
+      { label: 'Source code', href: 'https://github.com/Muaaz-Butt/Chess-project' },
+    ],
   },
 ]
 
