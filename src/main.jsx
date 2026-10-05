@@ -1,113 +1,252 @@
-import React, { StrictMode } from 'react'
+import React, { StrictMode, useState } from 'react'
 import { createRoot } from 'react-dom/client'
 import './styles.css'
+import { profile, stats, projects, experience, skillGroups, featuredSkills, marquee } from './data.js'
+import { HeroCanvas, Terminal, Counter, Magnetic, CursorRing, LocalTime, spotlight, useRevealOnScroll, useScrollProgress } from './effects.jsx'
+import { visuals } from './visuals.jsx'
 
-const projects = [
-  {
-    number: '01',
-    type: 'AI SYSTEM / 2025—26',
-    title: 'AIKAPPLY',
-    description: 'An AI-powered admission platform for Pakistani students: one application form, Gemini-based university recommendations, a deadline tracker and chatbot, plus auto-apply that maps student data onto unfamiliar portals and submits them with Selenium. Live and deployed.',
-    tags: ['Django', 'React', 'LangChain', 'Gemini', 'Selenium', 'Docker', 'PostgreSQL'],
-    tone: 'lime',
-    links: [
-      { label: 'Live demo', href: 'https://aikapply.onrender.com' },
-      { label: 'Source code', href: 'https://github.com/Muaaz-Butt/AikApply' },
-    ],
-  },
-  {
-    number: '02',
-    type: 'BACKEND / 2026',
-    title: 'TASKFLOW API',
-    description: 'A production-minded task service with JWT security and PostgreSQL, plus smart triage: priorities, overdue tracking, server-side search and filters, and a workload summary API. Backed by integration tests and a connected frontend.',
-    tags: ['Spring Boot', 'PostgreSQL', 'JWT', 'JPA', 'JUnit'],
-    tone: 'coral',
-    links: [
-      { label: 'Source code', href: 'https://github.com/Muaaz-Butt/TaskFlow-API' },
-    ],
-  },
-  {
-    number: '03',
-    type: 'SOFTWARE DESIGN / 2023',
-    title: 'CHESS GAME',
-    description: 'A console chess game built with complete game logic, modular state management, inheritance, and polymorphism.',
-    tags: ['C++', 'OOP', 'Game Logic'],
-    tone: 'blue',
-    links: [
-      { label: 'Source code', href: 'https://github.com/Muaaz-Butt/Chess-project' },
-    ],
-  },
-]
+const HEADLINE = [['I', 'build', 'the'], ['systems', 'behind'], ['better', 'ideas.']]
+const ACCENT_WORDS = new Set(['systems', 'ideas.'])
 
-const skills = ['Python', 'Java', 'C++', 'JavaScript', 'SQL', 'Rust', 'Django', 'Spring Boot', 'PostgreSQL', 'Docker', 'Redis', 'WebSockets', 'AWS', 'LangChain', 'LLM Agents', 'REST APIs']
-
-function App() {
+function Headline() {
+  let index = 0
   return (
-    <main>
-      <nav className="nav wrap">
-        <a className="wordmark" href="#top" aria-label="Muaaz Butt home"><span>MB</span><i>●</i></a>
-        <div className="nav-links">
-          <a href="#work">Work</a>
-          <a href="#about">About</a>
-          <a href="#contact" className="nav-contact">Let's talk <span>↗</span></a>
-        </div>
-      </nav>
+    <h1 className="headline" aria-label="I build the systems behind better ideas.">
+      {HEADLINE.map((line, l) => (
+        <span className="headline-line" key={l} aria-hidden="true">
+          {line.map(word => (
+            <span className="word-mask" key={word}>
+              <span className={`word ${ACCENT_WORDS.has(word) ? 'accent' : ''}`} style={{ '--i': index++ }}>{word}</span>
+            </span>
+          ))}
+        </span>
+      ))}
+    </h1>
+  )
+}
 
-      <section className="hero wrap" id="top">
+function Nav() {
+  const [progress, scrolled] = useScrollProgress()
+  return (
+    <>
+      <div className="scroll-progress" style={{ transform: `scaleX(${progress})` }} aria-hidden="true" />
+      <header className={`nav ${scrolled ? 'scrolled' : ''}`}>
+        <div className="wrap nav-inner">
+          <a className="wordmark" href="#top" aria-label="Muaaz Butt home"><span>MB</span><i>●</i></a>
+          <LocalTime />
+          <nav className="nav-links" aria-label="Sections">
+            <a href="#work">Work</a>
+            <a href="#experience">Experience</a>
+            <a href="#about">About</a>
+            <a href="#contact" className="nav-contact">Let's talk <span>↗</span></a>
+          </nav>
+        </div>
+      </header>
+    </>
+  )
+}
+
+function Hero() {
+  return (
+    <section className="hero" id="top">
+      <HeroCanvas />
+      <div className="wrap hero-grid">
         <div className="hero-copy">
-          <p className="eyebrow reveal">TECHNICAL CONTENT ENGINEER <span>·</span> AI BUILDER <span>·</span> BACKEND ENGINEER</p>
-          <h1 className="reveal delay-1">I build the <em>systems</em><br />behind better ideas.</h1>
-          <p className="hero-intro reveal delay-2">Technical Content Engineer at Educative, building AI agents and tools while creating dependable software with Python, Django, and Next.js.</p>
-          <div className="hero-actions reveal delay-3">
-            <a className="button button-primary" href="#work">See selected work <span>↓</span></a>
-            <a className="text-link" href="mailto:muaazbutt585@gmail.com">muaazbutt585@gmail.com <span>↗</span></a>
+          <p className="eyebrow intro-in" style={{ '--d': '0s' }}>
+            <span className="pulse"></span>{profile.role.toUpperCase()} <b>·</b> PYTHON &amp; BACKEND <b>·</b> LLM APPS
+          </p>
+          <Headline />
+          <p className="hero-intro intro-in" style={{ '--d': '.75s' }}>
+            I design REST APIs, authentication flows and real-time features, and at <strong>Educative</strong> I build
+            Python LLM applications and test them until they're reliable.
+          </p>
+          <div className="hero-actions intro-in" style={{ '--d': '.9s' }}>
+            <Magnetic><a className="button button-primary" href="#work">See selected work <span>↓</span></a></Magnetic>
+            <Magnetic><a className="button button-ghost" href={profile.github} target="_blank" rel="noreferrer">GitHub <span>↗</span></a></Magnetic>
           </div>
         </div>
-        <div className="hero-side reveal delay-2">
-          <div className="signal-mark" aria-hidden="true"><span></span><span></span><span></span><span></span></div>
-          <p>Currently building<br /><strong>agents & tools</strong> @ Educative</p>
-          <div className="status"><i></i> Available for interesting problems</div>
+        <div className="hero-terminal intro-in" style={{ '--d': '.5s' }}>
+          <Terminal />
+          <div className="terminal-glow" aria-hidden="true" />
         </div>
-      </section>
+      </div>
+      <div className="wrap stats">
+        {stats.map((s, i) => (
+          <div className="stat reveal" style={{ '--d': `${i * 0.08}s` }} key={s.label}>
+            <strong><Counter {...s} /></strong>
+            <span>{s.label}</span>
+          </div>
+        ))}
+      </div>
+    </section>
+  )
+}
 
-      <div className="ticker" aria-hidden="true"><div>DESIGN WITH INTENT <span>✳</span> SHIP WITH CARE <span>✳</span> DESIGN WITH INTENT <span>✳</span> SHIP WITH CARE <span>✳</span></div></div>
+function Marquee() {
+  const row = items => [...items, ...items].map((item, i) => <span key={i}>{item}<i>✳</i></span>)
+  return (
+    <div className="marquee" aria-hidden="true">
+      <div className="marquee-track">{row(marquee)}</div>
+      <div className="marquee-track reverse">{row([...marquee].reverse())}</div>
+    </div>
+  )
+}
 
-      <section className="work-section wrap" id="work">
-        <div className="section-heading"><p className="eyebrow">SELECTED WORK</p><p className="section-note">03 projects / 01 principle:<br /><strong>make it useful</strong></p></div>
-        <div className="project-list">
-          {projects.map((project) => (
-            <article className={`project project-${project.tone}`} key={project.number}>
-              <div className="project-number">{project.number}</div>
-              <div className="project-main">
-                <p className="project-type">{project.type}</p>
-                <h2>{project.links ? <a href={project.links[0].href} target="_blank" rel="noreferrer">{project.title}</a> : project.title}</h2>
-                <p>{project.description}</p>
-                <div className="tags">{project.tags.map(tag => <span key={tag}>{tag}</span>)}</div>
-                {project.links && (
-                  <div className="project-links">
-                    {project.links.map(link => <a key={link.href} href={link.href} target="_blank" rel="noreferrer">{link.label} <span>↗</span></a>)}
-                  </div>
-                )}
-              </div>
-              {project.links
-                ? <a className="project-arrow" href={project.links[0].href} target="_blank" rel="noreferrer" aria-label={`Open ${project.title}`}>↗</a>
-                : <div className="project-arrow">↗</div>}
-            </article>
-          ))}
+function SectionHeading({ index, label, title, note }) {
+  return (
+    <div className="section-heading reveal">
+      <div>
+        <p className="eyebrow"><span className="index">{index}</span>{label}</p>
+        <h2 className="section-title">{title}</h2>
+      </div>
+      {note && <p className="section-note">{note}</p>}
+    </div>
+  )
+}
+
+function Project({ project }) {
+  const Visual = visuals[project.visual]
+  return (
+    <article className={`project tone-${project.tone} reveal`} onPointerMove={spotlight}>
+      <div className="project-info">
+        <div className="project-meta"><span className="project-number">{project.number}</span><span>{project.kind}</span><span className="dot">/</span><span>{project.date}</span></div>
+        <h3><a href={project.links[0].href} target="_blank" rel="noreferrer">{project.title}<span className="title-arrow">↗</span></a></h3>
+        <p className="project-desc">{project.description}</p>
+        <ul className="highlights">{project.highlights.map(h => <li key={h}>{h}</li>)}</ul>
+        <div className="tags">{project.tags.map(tag => <span key={tag}>{tag}</span>)}</div>
+        <div className="project-links">
+          {project.links.map(link => <a key={link.href} href={link.href} target="_blank" rel="noreferrer">{link.label} <span>↗</span></a>)}
         </div>
-      </section>
+      </div>
+      <div className="project-visual"><Visual /></div>
+    </article>
+  )
+}
 
-      <section className="about-section" id="about">
-        <div className="wrap about-grid">
-          <div><p className="eyebrow">A LITTLE CONTEXT</p><h2>Curious by default.<br /><span>Precise by practice.</span></h2></div>
-          <div className="about-copy"><p>I’m Muaaz, a Computer Science graduate from UET Lahore and a Technical Content Engineer at Educative.</p><p>I work across agents, tools, and AI: analyzing prompts, reviewing AI-generated content, and helping turn complex ideas into clear, reliable learning experiences. I also write maintainable software in Python, Django, and Next.js for Educative projects.</p><div className="fact-row"><div><strong>AI</strong><span>agents & tools</span></div><div><strong>3</strong><span>core technologies</span></div><div><strong>280+</strong><span>problems solved</span></div></div></div>
+function Work() {
+  return (
+    <section className="work-section wrap" id="work">
+      <SectionHeading index="01" label="SELECTED WORK" title={<>Things I've <em>built.</em></>} note={<>03 projects / 01 principle:<br /><strong>make it useful</strong></>} />
+      <div className="project-list">{projects.map(p => <Project project={p} key={p.number} />)}</div>
+    </section>
+  )
+}
+
+function Experience() {
+  return (
+    <section className="experience-section wrap" id="experience">
+      <SectionHeading index="02" label="EXPERIENCE" title={<>Where I've <em>shipped.</em></>} note={<>Backend first,<br /><strong>AI by practice</strong></>} />
+      <ol className="timeline">
+        {experience.map((job, i) => (
+          <li className="job reveal" style={{ '--d': `${i * 0.1}s` }} key={job.company} onPointerMove={spotlight}>
+            <div className="job-marker"><span className={job.current ? 'live' : ''}></span></div>
+            <div className="job-side">
+              <span className="job-date">{job.date}</span>
+              <span className="job-place">{job.place}</span>
+              {job.current && <span className="now-badge"><i></i>Now</span>}
+            </div>
+            <div className="job-body">
+              <h3>{job.role} <span>@ {job.company}</span></h3>
+              <ul>{job.points.map(p => <li key={p}>{p}</li>)}</ul>
+              <div className="tags">{job.tags.map(t => <span key={t}>{t}</span>)}</div>
+            </div>
+          </li>
+        ))}
+      </ol>
+    </section>
+  )
+}
+
+function About() {
+  return (
+    <section className="about-section" id="about">
+      <div className="wrap about-grid">
+        <div className="reveal">
+          <p className="eyebrow"><span className="index">03</span>A LITTLE CONTEXT</p>
+          <h2>Curious by default.<br /><span>Precise by practice.</span></h2>
         </div>
-      </section>
+        <div className="about-copy reveal" style={{ '--d': '.1s' }}>
+          <p>I'm Muaaz, a Computer Science graduate from UET Lahore with a strong foundation in algorithms, data structures and object-oriented design.</p>
+          <p>I like the parts of software most people never see: the API contract, the auth flow, the test that catches the edge case. Lately that means building and evaluating LLM applications, and I'm especially drawn to developer tooling, SDKs and reliable backend systems.</p>
+          <div className="edu-card" onPointerMove={spotlight}>
+            <div className="edu-top"><span>EDUCATION</span><span>Dec 2022 — Jun 2026</span></div>
+            <h3>BS Computer Science</h3>
+            <p>University of Engineering and Technology, Lahore</p>
+            <div className="edu-facts">
+              <div><strong>3.49</strong><span>CGPA</span></div>
+              <div><strong>280+</strong><span>problems solved</span></div>
+              <div><strong>Top 5</strong><span>UET programming competition</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  )
+}
 
-      <section className="skills-section wrap"><div className="section-heading"><p className="eyebrow">THE TOOLBOX</p><p className="section-note">Always learning.<br /><strong>Never collecting.</strong></p></div><div className="skills-cloud">{skills.map((skill, i) => <span className={i % 5 === 0 ? 'featured-skill' : ''} key={skill}>{skill}</span>)}</div></section>
+function Skills() {
+  return (
+    <section className="skills-section wrap">
+      <SectionHeading index="04" label="THE TOOLBOX" title={<>What I <em>work with.</em></>} note={<>Always learning.<br /><strong>Never collecting.</strong></>} />
+      <div className="skill-groups">
+        {skillGroups.map((group, i) => (
+          <div className="skill-group reveal" style={{ '--d': `${(i % 3) * 0.08}s` }} key={group.name} onPointerMove={spotlight}>
+            <p className="skill-name"><span>0{i + 1}</span>{group.name}</p>
+            <div className="skill-items">{group.items.map(item => <span className={featuredSkills.has(item) ? 'featured' : ''} key={item}>{item}</span>)}</div>
+          </div>
+        ))}
+      </div>
+    </section>
+  )
+}
 
-      <section className="contact-section wrap" id="contact"><div className="contact-top"><p className="eyebrow">HAVE A GOOD PROBLEM?</p><span className="contact-index">04 / 04</span></div><h2>Let’s make<br /><em>something solid.</em></h2><a className="contact-email" href="mailto:muaazbutt585@gmail.com">muaazbutt585@gmail.com <span>↗</span></a><div className="contact-bottom"><span>Lahore, Pakistan</span><span>© 2026 Muaaz Butt</span><div className="socials"><a href="https://github.com/Muaaz-Butt" target="_blank" rel="noreferrer">GitHub ↗</a><a href="https://linkedin.com/in/muaaz-butt-192a45265" target="_blank" rel="noreferrer">LinkedIn ↗</a></div></div></section>
-    </main>
+function Contact() {
+  const [copied, setCopied] = useState(false)
+  async function copyEmail() {
+    try { await navigator.clipboard.writeText(profile.email); setCopied(true); setTimeout(() => setCopied(false), 2200) }
+    catch { window.location.href = `mailto:${profile.email}` }
+  }
+  return (
+    <section className="contact-section" id="contact">
+      <div className="contact-glow" aria-hidden="true" />
+      <div className="wrap">
+        <div className="contact-top reveal"><p className="eyebrow"><span className="index">05</span>HAVE A GOOD PROBLEM?</p><span className="contact-index">05 / 05</span></div>
+        <h2 className="reveal">Let's make<br /><em>something solid.</em></h2>
+        <div className="contact-actions reveal">
+          <Magnetic strength={0.18}><a className="contact-email" href={`mailto:${profile.email}`}>{profile.email} <span>↗</span></a></Magnetic>
+          <button className="copy-button" type="button" onClick={copyEmail}>{copied ? 'Copied ✓' : 'Copy email'}</button>
+        </div>
+        <footer className="contact-bottom">
+          <span>{profile.location}</span>
+          <span>© 2026 {profile.name}</span>
+          <div className="socials">
+            <a href={profile.github} target="_blank" rel="noreferrer">GitHub ↗</a>
+            <a href={profile.linkedin} target="_blank" rel="noreferrer">LinkedIn ↗</a>
+            <a href="#top">Back to top ↑</a>
+          </div>
+        </footer>
+      </div>
+    </section>
+  )
+}
+
+function App() {
+  useRevealOnScroll()
+  return (
+    <>
+      <CursorRing />
+      <div className="grain" aria-hidden="true" />
+      <Nav />
+      <main>
+        <Hero />
+        <Marquee />
+        <Work />
+        <Experience />
+        <About />
+        <Skills />
+        <Contact />
+      </main>
+    </>
   )
 }
 
