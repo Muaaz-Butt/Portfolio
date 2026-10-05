@@ -38,6 +38,7 @@ function Nav() {
             <a href="#work">Work</a>
             <a href="#experience">Experience</a>
             <a href="#about">About</a>
+            <a href={profile.resume} download className="nav-resume">Résumé <span>↓</span></a>
             <a href="#contact" className="nav-contact">Let's talk <span>↗</span></a>
           </nav>
         </div>
@@ -62,6 +63,7 @@ function Hero() {
           </p>
           <div className="hero-actions intro-in" style={{ '--d': '.9s' }}>
             <Magnetic><a className="button button-primary" href="#work">See selected work <span>↓</span></a></Magnetic>
+            <Magnetic><a className="button button-ghost" href={profile.resume} download>Download résumé <span>↓</span></a></Magnetic>
             <Magnetic><a className="button button-ghost" href={profile.github} target="_blank" rel="noreferrer">GitHub <span>↗</span></a></Magnetic>
           </div>
         </div>
@@ -215,6 +217,7 @@ function Contact() {
         <div className="contact-actions reveal">
           <Magnetic strength={0.18}><a className="contact-email" href={`mailto:${profile.email}`}>{profile.email} <span>↗</span></a></Magnetic>
           <button className="copy-button" type="button" onClick={copyEmail}>{copied ? 'Copied ✓' : 'Copy email'}</button>
+          <a className="copy-button" href={profile.resume} download>Download résumé ↓</a>
         </div>
         <footer className="contact-bottom">
           <span>{profile.location}</span>

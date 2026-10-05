@@ -6,6 +6,7 @@ export const profile = {
   location: 'Lahore, Pakistan',
   github: 'https://github.com/Muaaz-Butt',
   linkedin: 'https://linkedin.com/in/muaaz-butt-192a45265',
+  resume: '/Muaaz_Butt_Resume.pdf',
 }
 
 export const stats = [

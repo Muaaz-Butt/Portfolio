@@ -40,6 +40,7 @@ em { font-style: normal; }
 .nav-links a:not(.nav-contact)::after { content: ''; position: absolute; left: 0; right: 0; bottom: -6px; height: 1px; background: var(--lime); transform: scaleX(0); transform-origin: right; transition: transform .4s var(--ease); }
 .nav-links a:hover { color: var(--paper); }
 .nav-links a:hover::after { transform: scaleX(1); transform-origin: left; }
+.nav-resume span { color: var(--lime); }
 .nav-contact { color: var(--paper); border: 1px solid var(--line); border-radius: 999px; padding: 9px 15px; transition: background .25s, color .25s, border-color .25s !important; }
 .nav-contact span { color: var(--lime); }
 .nav-contact:hover { background: var(--lime); color: var(--ink) !important; border-color: var(--lime); }
@@ -276,7 +277,7 @@ em { font-style: normal; }
   .nav-inner { height: 66px; gap: 14px; }
   .local-time { display: none; }
   .nav-links { gap: 18px; font-size: 11px; }
-  .nav-links a:nth-child(2), .nav-links a:nth-child(3) { display: none; }
+  .nav-links a:nth-child(-n+3) { display: none; }
   .hero { padding-top: 110px; min-height: auto; }
   .headline { font-size: clamp(46px, 14.5vw, 76px); margin: 22px 0 24px; }
   .hero-intro { font-size: 15.5px; }
