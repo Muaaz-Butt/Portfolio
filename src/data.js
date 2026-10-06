@@ -57,17 +57,17 @@ export const projects = [
   {
     number: '03',
     kind: 'SOFTWARE DESIGN',
-    date: 'May 2023',
+    date: 'May 2023 · rebuilt Oct 2026',
     title: 'Chess Game',
     tone: 'blue',
     visual: 'chess',
-    description: 'Complete chess logic in C++: every piece, every rule, and game-state validation, designed around a clean class hierarchy rather than one giant switch statement.',
+    description: 'Full two-player chess with every rule enforced in C++, played in the browser. A small C++ web server sends the game state to a JavaScript board, so the frontend draws while the engine decides what is legal.',
     highlights: [
-      'Abstraction, inheritance and polymorphism through a Piece hierarchy',
-      'Modular classes for board, moves and game state',
-      'Game-state validation for legal moves, check and checkmate',
+      'Piece class hierarchy with polymorphic movement rules',
+      'Check, pins, castling, en passant, promotion, checkmate, stalemate and draw rules',
+      'Move generation verified against published perft counts (34 tests)',
     ],
-    tags: ['C++', 'OOP', 'Game Logic'],
+    tags: ['C++', 'OOP', 'cpp-httplib', 'JavaScript', 'CMake'],
     links: [
       { label: 'Source code', href: 'https://github.com/Muaaz-Butt/Chess-project' },
     ],
