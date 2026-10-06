@@ -24,11 +24,11 @@ export const projects = [
     title: 'AikApply',
     tone: 'lime',
     visual: 'form',
-    description: 'A university application assistant for Pakistani students. Fill one form, get Gemini-powered recommendations from your preferred fields, then let an agent map your data onto unfamiliar admission portals, log in and submit.',
+    description: 'A university admission platform for Pakistani students. Fill one application form, get Gemini-powered recommendations based on your preferred fields, then let an agent map your data onto unfamiliar admission portals, log in and submit. Live, deployed with Docker and PostgreSQL.',
     highlights: [
-      'Intelligent form mapping with LangChain + Gemini on portals it has never seen',
-      'Automated login and submission workflows driven by Selenium',
-      'Chatbot guidance, deadline tracking and error logging',
+      'Form mapping with LangChain + Gemini on portals it has never seen, submitted with Selenium',
+      'AI career chatbot backed by a dataset of Pakistani universities, fees and deadlines',
+      'Deadline tracker, editable application form and a layout that works on phones',
     ],
     tags: ['Python', 'Django', 'React', 'LangChain', 'Selenium', 'Docker', 'PostgreSQL'],
     links: [
